@@ -1,0 +1,1 @@
+CHANNELS = ['TV SLO 1', 'TV SLO 2', 'Planet TV', 'POP TV', 'Kanal A']

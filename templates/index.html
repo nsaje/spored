@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spored</title>
+    <style type="text/css">
+        #entries {
+            overflow: scroll;
+            white-space: nowrap;
+        }
+        .row {
+            display: block;
+            clear: both;
+        }
+        .first-row .entry {
+            border-top-width: 1px;
+        }
+        .entry {
+{#            float:left;#}
+            height: 3em;
+            border: 1px solid black;
+{#            border-left-width: 0px;#}
+{#            border-top-width: 0px;#}
+            display: inline-block;
+            padding: 1em;
+        }
+    </style>
+    <script src="static/js/jquery-2.1.0.js"></script>
+    <script type="text/javascript" src="http:////cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/epg');
+        socket.on('connect', function() {
+            socket.emit('epg', {channel: 'POP TV',
+                                from: new Date(2014, 2, 21,14).getTime(),
+                                to: new Date(2014,2,21,16).getTime()})
+        })
+        socket.on('channel', function(msg) {
+            $('#log').append('<p>Received: ' + msg + '</p>');
+            $('<div/>', {
+                'class': 'entry',
+                'text': msg.title
+            }).appendTo('#TV-SLO-1');
+        });
+    });
+    </script>
+</head>
+<body>
+<div id="entries">
+<div class="row">
+    <div class="entry">one</div>
+    <div class="entry">one</div>
+</div>
+    <div id="TV-SLO-1" class="row">
+    </div>
+</div>
+<div id="log"></div>
+</body>
+</html>
